@@ -3,12 +3,17 @@ import java.util.Scanner;
 
 public class Exercicio6 {
 
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     static void imprimeTabuleiro(char[][] tabuleiro) {
         System.out.println();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (j != 2) {
-                    System.out.printf("%2c |", tabuleiro[i][j]);
+                    System.out.printf("%2c │", tabuleiro[i][j]);
                 }else{
                     System.out.printf("%2c", tabuleiro[i][j]);
                 }
@@ -16,7 +21,7 @@ public class Exercicio6 {
             }
             if (i!=2) {
                 System.out.println();
-                System.out.print("-----------");
+                System.out.print("───┼───┼───");
                 System.out.println();
             } else {
                 System.out.println();
@@ -46,25 +51,25 @@ public class Exercicio6 {
 
         //possibilidade 1: tab[1][j] são iguais
         for (int i = 0; i<3; i++){
-            if (tabuleiro[i][0] == tabuleiro[i][1] && tabuleiro[i][0] != 65){
+            if (tabuleiro[i][0] == tabuleiro[i][1] && tabuleiro[i][0] != 32){
                 if (tabuleiro[i][1] == tabuleiro[i][2]){
                     return true;
                 }
             }
         }
         for (int j = 0; j<3; j++){
-            if (tabuleiro[0][j] == tabuleiro[1][j] && tabuleiro[0][j] != 65){
+            if (tabuleiro[0][j] == tabuleiro[1][j] && tabuleiro[0][j] != 32){
                 if (tabuleiro[1][j] == tabuleiro[2][j]){
                     return true;
                 }
             }
         }
-        if (tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[0][0] != 65){
+        if (tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[0][0] != 32){
             if (tabuleiro[1][1] == tabuleiro[2][2]){
                 return true;
             }
         }
-        if (tabuleiro[0][2] == tabuleiro[1][1] && tabuleiro[0][2] != 65){
+        if (tabuleiro[0][2] == tabuleiro[1][1] && tabuleiro[0][2] != 32){
             if (tabuleiro[1][1] == tabuleiro[2][0]){
                 return true;
             }
@@ -78,7 +83,7 @@ public class Exercicio6 {
         char[][] tabuleiro = new char[3][3];
         for (int i=0;i<3;i++){
             for (int j=0; j<3;j++){
-                tabuleiro[i][j] = 65;
+                tabuleiro[i][j] = 32;
             }
         }
 
@@ -96,11 +101,12 @@ public class Exercicio6 {
         jogador1 = scanner.nextLine();
         System.out.println("Nome jogador 2: ");
         jogador2 = scanner.nextLine();
+        clearScreen();
         imprimeTabuleiro(tabuleiro);
 
         do{
             do {
-                System.out.println("VEZ DE " + jogador1);
+                System.out.println("\nVEZ DE " + jogador1);
                 System.out.println("Escolha um local para jogar!");
                 System.out.println("Linha: ");
                 linha = scanner.nextInt();
@@ -113,9 +119,10 @@ public class Exercicio6 {
                 vencedor = true;
                 break;
             }
+            clearScreen();
             imprimeTabuleiro(tabuleiro);
             do {
-                System.out.println("VEZ DE " + jogador2);
+                System.out.println("\nVEZ DE " + jogador2);
                 System.out.println("Escolha um local para jogar!");
                 System.out.println("Linha: ");
                 linha = scanner.nextInt();
@@ -124,10 +131,12 @@ public class Exercicio6 {
             }while(!validaJogada(linha-1, coluna-1, tabuleiro));
             tabuleiro[linha-1][coluna-1] = 'O';
             if (checaVencedor(tabuleiro)) {
+                imprimeTabuleiro(tabuleiro);
                 System.out.println("Parabéns, " + jogador2 + " venceu!!!");
                 vencedor = true;
                 break;
             }
+            clearScreen();
             imprimeTabuleiro(tabuleiro);
         }while(!vencedor);
 
